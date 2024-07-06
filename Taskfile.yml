@@ -1,0 +1,20 @@
+version: "3"
+
+tasks:
+    default:
+        - task: help
+
+    help:
+        silent: true
+        cmds:
+            - task -l
+
+    build:dev: npm run dev
+    build: npm run build
+    watch: watchexec --no-vcs-ignore --exts "js,json,css" cp main.js styles.css manifest.json $HOME/ghq/github.com/FScoward/obsidian/.obsidian/plugins/obsidian-revision-tracker/
+
+    dev:
+        desc: Build and copy files when they are updated.
+        deps:
+            - build:dev
+            - watch
