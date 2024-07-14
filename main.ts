@@ -168,6 +168,10 @@ export default class ObsidianRevisionTracker extends Plugin {
 		});
 	}
 
+	convertNewlinesToBr(text: string): string {
+		return text.replace(/\n/g, "<br>");
+	}
+
 	createSplitDiffHtml(oldText: string, newText: string): string {
 		const diff = Diff.diffLines(oldText, newText);
 		const oldHtml = diff
@@ -178,7 +182,8 @@ export default class ObsidianRevisionTracker extends Plugin {
 					? "diff-delete"
 					: "diff-equal";
 				const escapedLine = this.escapeHtml(part.value);
-				return `<div class="${className}">${escapedLine}</div>`;
+				const lineWithBr = this.convertNewlinesToBr(escapedLine);
+				return `<div class="${className}">${lineWithBr}</div>`;
 			})
 			.join("");
 
@@ -190,7 +195,8 @@ export default class ObsidianRevisionTracker extends Plugin {
 					? "diff-delete"
 					: "diff-equal";
 				const escapedLine = this.escapeHtml(part.value);
-				return `<div class="${className}">${escapedLine}</div>`;
+				const lineWithBr = this.convertNewlinesToBr(escapedLine);
+				return `<div class="${className}">${lineWithBr}</div>`;
 			})
 			.join("");
 
